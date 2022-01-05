@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Add from './Components/Add'
 import Display from './Components/Display'
 import Filter from './Components/Filter'
+import Notification from './Components/Notification'
 import personService from './services/persons'
 
 const App = () => {
@@ -10,6 +11,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
   const [personsToDisplay, setPersonsToDisplay] = useState(persons)
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     personService
@@ -22,11 +24,18 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    const duplicate = persons.filter((person) => person.name === newName)
+    const duplicate = persons.filter((per) => per.name === newName)
     if (duplicate.length > 0) {
-      if (window.confirm(`${duplicate[0].name} is already added to phonebook, replace the old number with a new one?`)) {
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
         personService
           .update(duplicate[0], newNumber)
+          .catch(error => {
+            setMessage(`Information of ${newName} has already been removed from server`)
+            setTimeout(() => setMessage(null), 2000)
+
+            setPersons(persons.filter((per) => per.name !== newName))
+            setPersonsToDisplay(persons.filter((per) => per.name !== newName))
+          })
 
         setPersons(persons.map(per => per.id === duplicate[0].id ? { ...per, number: newNumber } : per))
         setPersonsToDisplay(persons.map(per => per.id === duplicate[0].id ? { ...per, number: newNumber } : per))
@@ -44,6 +53,9 @@ const App = () => {
           setPersons(persons.concat(newPerson))
           setPersonsToDisplay(persons.concat(newPerson))
         })
+
+      setMessage(`Added ${newName}`)
+      setTimeout(() => setMessage(null), 2000)
     }
     setNewName('')
     setNewNumber('')
@@ -80,6 +92,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message}/>
       <Filter filter={[newFilter, handleNewFilter]}/>
       <h2>Add contacts</h2>
       <Add addPerson={addPerson} name={[newName, handleNewName]} number={[newNumber, handleNewNumber]}/>
