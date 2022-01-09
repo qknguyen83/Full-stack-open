@@ -29,16 +29,16 @@ const App = () => {
       if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
         personService
           .update(duplicate[0], newNumber)
-          .catch(error => {
-            setMessage(`Information of ${newName} has already been removed from server`)
-            setTimeout(() => setMessage(null), 2000)
-
-            setPersons(persons.filter((per) => per.name !== newName))
-            setPersonsToDisplay(persons.filter((per) => per.name !== newName))
+          .then(response => {
+            setPersons(persons.map(per => per.id === duplicate[0].id ? { ...per, number: newNumber } : per))
+            setPersonsToDisplay(persons.map(per => per.id === duplicate[0].id ? { ...per, number: newNumber } : per))
+            setMessage(`Updated ${newName}'s phone number successfully`)
+            setTimeout(() => setMessage(null), 3000)
           })
-
-        setPersons(persons.map(per => per.id === duplicate[0].id ? { ...per, number: newNumber } : per))
-        setPersonsToDisplay(persons.map(per => per.id === duplicate[0].id ? { ...per, number: newNumber } : per))
+          .catch(error => {
+            setMessage(error.response.data)
+            setTimeout(() => setMessage(null), 3000)
+          })
       }
     }
     else {
@@ -52,10 +52,13 @@ const App = () => {
         .then(newPerson => {
           setPersons(persons.concat(newPerson))
           setPersonsToDisplay(persons.concat(newPerson))
+          setMessage(`Added ${newName}`)
+          setTimeout(() => setMessage(null), 3000)
         })
-
-      setMessage(`Added ${newName}`)
-      setTimeout(() => setMessage(null), 2000)
+        .catch(error => {
+          setMessage(error.response.data)
+          setTimeout(() => setMessage(null), 3000)
+        })
     }
     setNewName('')
     setNewNumber('')

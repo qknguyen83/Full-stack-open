@@ -4,16 +4,16 @@ const Notification = ({ message }) => {
     if (message === null) {
         return null
     }
-    else if (message.substring(0,5) === 'Added') {
+    else if (message.substring(0,5) === 'Added' || message.substring(0,7) === 'Updated') {
         return (
-            <div className='Added'>
+            <div className='Green'>
                 {message}
             </div>
         )
     }
     else {
         return (
-            <div className='Alert'>
+            <div className='Red'>
                 {message}
             </div>
         )
