@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import loginService from './services/login'
 import blogsService from './services/blogs'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
+import CreateForm from './components/CreateForm'
+import Blog from './components/Blog'
 
 const App = () => {
   const [username, setUsername] = useState('')
@@ -9,10 +12,6 @@ const App = () => {
 
   const [user, setUser] = useState(null)
   const [blogs, setBlogs] = useState([])
-
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
 
   const [notification, setNotification] = useState(null)
 
@@ -27,7 +26,10 @@ const App = () => {
 
   useEffect(() => {
     if (user !== null) {
-      const getBlogs = async () => setBlogs(await blogsService.getAll())
+      const getBlogs = async () => {
+        const listOfBlogs = await blogsService.getAll()
+        setBlogs(listOfBlogs.sort((a, b) => a.likes > b.likes ? -1 : 1))
+      }
       getBlogs()
     }
     else {
@@ -43,15 +45,15 @@ const App = () => {
         username: username,
         password: password
       })
-  
+
       window.localStorage.setItem(
         'loggedInUser', JSON.stringify(response)
       )
-  
+
       blogsService.setToken(response.token)
-  
+
       setUser(response)
-      
+
       setNotification('login successfully')
       setTimeout(() => {
         setNotification(null)
@@ -70,35 +72,20 @@ const App = () => {
 
   const handleLogout = (event) => {
     event.preventDefault()
-
     window.localStorage.removeItem('loggedInUser')
-
     setUser(null)
-    setTitle('')
-    setAuthor('')
-    setUrl('')
   }
 
-  const handleCreate = async (event) => {
-    event.preventDefault()
-
+  const addBlog = async (theBlog) => {
     try {
-      const newBlog = await blogsService.create({
-        ...title !== '' && {title: title},
-        ...url !== '' && {url: url},
-        author: author
-      })
-  
-      setBlogs(blogs.concat(newBlog))
+      const response = await blogsService.create(theBlog)
 
-      setNotification(`a new blog ${newBlog.title} by ${newBlog.author !== '' ? newBlog.author : 'unknown author'} added successfully`)
+      setBlogs(blogs.concat(response).sort((a, b) => a.likes > b.likes ? -1 : 1))
+
+      setNotification(`a new blog ${response.title} by ${response.author !== '' ? response.author : 'unknown author'} added successfully`)
       setTimeout(() => {
         setNotification(null)
       }, 3000)
-
-      setTitle('')
-      setAuthor('')
-      setUrl('')
     }
     catch (error) {
       setNotification('missing title and/or url')
@@ -108,42 +95,73 @@ const App = () => {
     }
   }
 
-  const handleUsernameChange = ({ target }) => setUsername(target.value)
-  const handlePasswordChange = ({ target }) => setPassword(target.value)
+  const updateLike = async (theBlog) => {
+    try {
+      const response = await blogsService.update(theBlog)
 
-  const handleTitleChange = ({ target }) => setTitle(target.value)
-  const handleAuthorChange = ({ target }) => setAuthor(target.value)
-  const handleUrlChange = ({ target }) => setUrl(target.value)
+      const index = blogs.findIndex(blog => blog.id === response.id)
+      blogs[index].likes = response.likes
+
+      setBlogs(blogs.concat().sort((a, b) => a.likes > b.likes ? -1 : 1))
+    }
+    catch (error) {
+      setNotification(error.message)
+      setTimeout(() => {
+        setNotification(null)
+      }, 3000)
+    }
+  }
+
+  const deleteBlog = async (theBlog) => {
+    try {
+      if (window.confirm(`delete blog ${theBlog.title} by ${theBlog.author !== '' ? theBlog.author : 'unknown author'}`)) {
+        await blogsService.remove(theBlog)
+
+        const index = blogs.findIndex(blog => blog.id === theBlog.id)
+        const tempBlogs = blogs.concat()
+        tempBlogs.splice(index, 1)
+
+        setBlogs(tempBlogs)
+
+        setNotification(`blog ${theBlog.title} by ${theBlog.author !== '' ? theBlog.author : 'unknown author'} deleted successfully`)
+        setTimeout(() => {
+          setNotification(null)
+        }, 3000)
+      }
+    }
+    catch (error) {
+      setNotification(error.message)
+      setTimeout(() => {
+        setNotification(null)
+      }, 3000)
+    }
+  }
 
   return (
     <div>
       {user !== null
         ?
-          <div>
-            <h1>blogs</h1>
-            <Notification message={notification}/>
-            {user.name} logged in <button onClick={handleLogout}>logout</button>
-            <h1>create new</h1>
-            <form onSubmit={handleCreate}>
-              title <input value={title} onChange={handleTitleChange}/> <br/>
-              author <input value={author} onChange={handleAuthorChange}/> <br/>
-              url <input value={url} onChange={handleUrlChange}/> <br/>
-              <button type='submit'>create</button>
-            </form>
-            {blogs.map(blog =>
-              <p key={blog.id}>{blog.title} by {blog.author !== '' ? blog.author : 'unknown author'}</p>
-            )}
-          </div>
+        <div>
+          <h1>blogs</h1>
+          <Notification message={notification}/>
+          {user.name} logged in <button onClick={handleLogout}>logout</button>
+          <Togglable buttonLabel='create new blog'>
+            <CreateForm addBlog={addBlog}/>
+          </Togglable>
+          {blogs.map(blog =>
+            <Blog key={blog.id} blog={blog} updateLike={updateLike} deleteBlog={deleteBlog}/>
+          )}
+        </div>
         :
-          <div>
-            <h1>login to application</h1>
-            <Notification message={notification}/>
-            <form onSubmit={handleLogin}>
-              username <input value={username} onChange={handleUsernameChange}/> <br/>
-              password <input value={password} onChange={handlePasswordChange}/> <br/>
-              <button type='submit'>login</button>
-            </form>
-          </div>
+        <div>
+          <h1>login to application</h1>
+          <Notification message={notification}/>
+          <form onSubmit={handleLogin}>
+            username <input value={username} onChange={({ target }) => setUsername(target.value)}/> <br/>
+            password <input value={password} onChange={({ target }) => setPassword(target.value)}/> <br/>
+            <button type='submit'>login</button>
+          </form>
+        </div>
       }
     </div>
   )
