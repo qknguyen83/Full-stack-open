@@ -29,15 +29,19 @@ const Blog = ({ blog, updateLike, deleteBlog }) => {
   return (
     <div style={blogStyle}>
       <p>
-        {blog.title} <button onClick={toggleShowDetails}>{showDetails === false ? 'view' : 'hide'}</button>
+        {`${blog.title} by ${blog.author}`} <button onClick={toggleShowDetails}>{showDetails === false ? 'view' : 'hide'}</button>
       </p>
       {showDetails === true
         ?
         <div>
-          <p>author: {blog.author}</p>
-          <p>url: {blog.url}</p>
-          <p>
+          <p className='url'>
+            url: {blog.url}
+          </p>
+          <p className='likes'>
             likes: {blog.likes} <button onClick={handleLike}>like</button>
+          </p>
+          <p className='addedBy'>
+            added by: {blog.user.name}
           </p>
           {blog.user !== undefined && blog.user.length !== 0
             ?
