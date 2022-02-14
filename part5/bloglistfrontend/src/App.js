@@ -144,22 +144,24 @@ const App = () => {
         <div>
           <h1>blogs</h1>
           <Notification message={notification}/>
-          {user.name} logged in <button onClick={handleLogout}>logout</button>
+          {user.name} logged in <button id='logout' onClick={handleLogout}>logout</button>
           <Togglable buttonLabel='create new blog'>
             <CreateForm addBlog={addBlog}/>
           </Togglable>
-          {blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} updateLike={updateLike} deleteBlog={deleteBlog}/>
-          )}
+          <div id='listOfBlogs'>
+            {blogs.map(blog =>
+              <Blog key={blog.id} blog={blog} updateLike={updateLike} deleteBlog={deleteBlog}/>
+            )}
+          </div>
         </div>
         :
         <div>
           <h1>login to application</h1>
           <Notification message={notification}/>
-          <form onSubmit={handleLogin}>
-            username <input value={username} onChange={({ target }) => setUsername(target.value)}/> <br/>
-            password <input value={password} onChange={({ target }) => setPassword(target.value)}/> <br/>
-            <button type='submit'>login</button>
+          <form id='loginForm' onSubmit={handleLogin}>
+            username <input id='username' value={username} onChange={({ target }) => setUsername(target.value)}/> <br/>
+            password <input id='password' value={password} onChange={({ target }) => setPassword(target.value)}/> <br/>
+            <button id='login' type='submit'>login</button>
           </form>
         </div>
       }
