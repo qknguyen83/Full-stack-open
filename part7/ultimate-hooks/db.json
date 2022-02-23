@@ -1,0 +1,60 @@
+{
+  "notes": [
+    {
+      "content": "custom-hooks are great",
+      "id": 1
+    },
+    {
+      "content": "the best featrure ever <3",
+      "id": 2
+    },
+    {
+      "content": "a new note from custom hook!",
+      "id": 3
+    },
+    {
+      "content": "just another new note",
+      "id": 4
+    },
+    {
+      "content": "Nobita loves Shizuka",
+      "id": 5
+    },
+    {
+      "content": "final note",
+      "id": 6
+    }
+  ],
+  "persons": [
+    {
+      "name": "mluukkai",
+      "number": "040-5483923",
+      "id": 1
+    },
+    {
+      "name": "kaltsoon",
+      "number": "045-2323456",
+      "id": 2
+    },
+    {
+      "name": "khainq11",
+      "number": "123-123-123",
+      "id": 3
+    },
+    {
+      "name": "nobita231",
+      "number": "123-456-789",
+      "id": 4
+    },
+    {
+      "name": "Shizuka",
+      "number": "342-153-4643",
+      "id": 5
+    },
+    {
+      "name": "final name",
+      "number": "999-999-999",
+      "id": 6
+    }
+  ]
+}
