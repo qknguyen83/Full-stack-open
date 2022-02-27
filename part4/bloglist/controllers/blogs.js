@@ -51,4 +51,9 @@ blogsRouter.put('/:id', async (request, response) => {
   response.json(updatedBlog)
 })
 
+blogsRouter.put('/:id/comments', async (request, response) => {
+  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, request.body, { new: true })
+  response.json(updatedBlog)
+})
+
 module.exports = blogsRouter
