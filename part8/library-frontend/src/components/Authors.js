@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useQuery, useMutation } from '@apollo/client'
 import { ALL_AUTHORS, EDIT_AUTHOR } from '../queries'
 
-const UpdateForm = ({ authors }) => {
+const UpdateForm = ({ show, authors }) => {
   const [name, setName] = useState(authors[0].name || '')
   const [born, setBorn] = useState('')
 
@@ -15,6 +15,10 @@ const UpdateForm = ({ authors }) => {
 
     setName('')
     setBorn('')
+  }
+
+  if (!show) {
+    return null
   }
 
   return (
@@ -63,7 +67,7 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
-      <UpdateForm authors={authors}/>
+      <UpdateForm show={props.updateForm} authors={authors}/>
     </div>
   )
 }
