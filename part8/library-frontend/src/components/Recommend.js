@@ -5,7 +5,7 @@ const Recommend = ({ show }) => {
   const stResponse = useQuery(ABOUT_ME)
 
   const ndResponse = useQuery(ALL_BOOKS, {
-    variables: stResponse.data ? stResponse.data.me ? { genre: stResponse.data.me.favoriteGenre } : null : null,
+    variables: stResponse.data ? { genre: stResponse.data.me.favoriteGenre } : null,
     pollInterval: 2000
   })
 

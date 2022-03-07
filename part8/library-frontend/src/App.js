@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient, useSubscription } from '@apollo/client'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import Recommend from './components/Recommend'
+import { BOOK_ADDED } from './queries'
 
 const App = () => {
   const [token, setToken] = useState(null)
@@ -18,6 +19,13 @@ const App = () => {
       setToken(savedToken)
     }
   }, [])
+
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const newBook = subscriptionData.data.bookAdded
+      window.alert(`${newBook.title} added`)
+    }
+  })
 
   const handleLogout = () => {
     setToken(null)
@@ -51,7 +59,7 @@ const App = () => {
 
       <LoginForm show={page === 'login'} setToken={setToken} setPage={setPage}/>
 
-      <Recommend show={page ==='recommend'}/>
+      {token && <Recommend show={page ==='recommend'}/>}
     </div>
   )
 }
