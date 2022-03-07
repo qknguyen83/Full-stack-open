@@ -9,6 +9,9 @@ const schema = mongoose.Schema({
   },
   born: {
     type: Number
+  },
+  bookCount: {
+    type: Number
   }
 })
 
