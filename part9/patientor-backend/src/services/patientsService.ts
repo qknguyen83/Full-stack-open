@@ -1,5 +1,5 @@
 import patients from '../../data/patients';
-import { PatientWithoutSSN, Patient, NewPatientInfo } from '../types';
+import { PatientWithoutSSN, Patient, NewPatientInfo, PublicPatient, NewPatientEntry, Entry } from '../types';
 import { v1 as uuid} from 'uuid';
 
 const getPatients = (): Patient[] => {
@@ -7,18 +7,22 @@ const getPatients = (): Patient[] => {
 };
 
 const getPatientsWithoutSSN = (): PatientWithoutSSN[] => {
-  return patients.map(({ id, name, dateOfBirth, gender, occupation }) => ({
+  return patients.map(({ id, name, dateOfBirth, gender, occupation, entries }) => ({
     id,
     name,
     dateOfBirth,
     gender,
-    occupation
+    occupation,
+    entries
   }));
 };
 
+const getPatientById = (id: string): PublicPatient => {
+  return patients.find(patient => patient.id === id);
+};
+
 const addPatient = (newPatientInfo: NewPatientInfo): Patient => {
-  const newPatient = {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment
+  const newPatient: Patient = {
     id: uuid(),
     ...newPatientInfo
   };
@@ -28,8 +32,25 @@ const addPatient = (newPatientInfo: NewPatientInfo): Patient => {
   return newPatient;
 };
 
+const addEntry = (id: string, newPatientEntry: NewPatientEntry): Entry => {
+  const newEntry: Entry = {
+    id: uuid(),
+    ...newPatientEntry
+  };
+
+  patients.forEach(patient => {
+    if (patient.id === id) {
+      patient.entries.push(newEntry);
+    }
+  });
+
+  return newEntry;
+};
+
 export default {
   getPatients,
   getPatientsWithoutSSN,
-  addPatient
+  getPatientById,
+  addPatient,
+  addEntry
 };
