@@ -9,7 +9,7 @@ const useSignIn = () => {
   const [ mutate ] = useMutation(SIGN_IN, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
-    }
+    },
   });
 
   const signIn = async ({ username, password }) => {

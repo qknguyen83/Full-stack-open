@@ -1,4 +1,5 @@
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Pressable } from 'react-native';
+import * as Linking from 'expo-linking';
 import Text from './Text';
 
 const styles = StyleSheet.create({
@@ -33,12 +34,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-  alignCenter: {
-    textAlign: 'center',
-  },
+  button: {
+    width: 340,
+    height: 44,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#0366d6',
+    marginTop: 10,
+    borderRadius: 3,
+  }
 });
 
-const RepositoryItem = ({ item }) => {
+const RepositoryItem = ({ item, single }) => {
   const rounder = (num) => {
     if (num >= 1000) {
       return `${(num / 1000).toFixed(1)}k`;
@@ -48,7 +56,7 @@ const RepositoryItem = ({ item }) => {
   }
 
   return (
-    <View style={styles.card}>
+    <View style={styles.card} testID='repositoryItem'>
       <View>
         <Image style={styles.image} source={{ uri: item.ownerAvatarUrl }} />
         <Text style={styles.name} fontWeight='bold'>{item.fullName}</Text>
@@ -57,22 +65,27 @@ const RepositoryItem = ({ item }) => {
       </View>
       <View style={styles.stats}>
         <View>
-          <Text style={styles.alignCenter} fontWeight='bold'>{rounder(item.stargazersCount)}</Text>
-          <Text style={styles.alignCenter}>Stars</Text>
+          <Text style={{ textAlign: 'center' }} fontWeight='bold'>{rounder(item.stargazersCount)}</Text>
+          <Text style={{ textAlign: 'center' }}>Stars</Text>
         </View>
         <View>
-          <Text style={styles.alignCenter} fontWeight='bold'>{rounder(item.forksCount)}</Text>
-          <Text style={styles.alignCenter}>Forks</Text>
+          <Text style={{ textAlign: 'center' }} fontWeight='bold'>{rounder(item.forksCount)}</Text>
+          <Text style={{ textAlign: 'center' }}>Forks</Text>
         </View>
         <View>
-          <Text style={styles.alignCenter} fontWeight='bold'>{rounder(item.reviewCount)}</Text>
-          <Text style={styles.alignCenter}>Reviews</Text>
+          <Text style={{ textAlign: 'center' }} fontWeight='bold'>{rounder(item.reviewCount)}</Text>
+          <Text style={{ textAlign: 'center' }}>Reviews</Text>
         </View>
         <View>
-          <Text style={styles.alignCenter} fontWeight='bold'>{rounder(item.ratingAverage)}</Text>
-          <Text style={styles.alignCenter}>Rating</Text>
+          <Text style={{ textAlign: 'center' }} fontWeight='bold'>{rounder(item.ratingAverage)}</Text>
+          <Text style={{ textAlign: 'center' }}>Rating</Text>
         </View>
       </View>
+      {single &&
+        <Pressable style={{ alignItems: 'center' }} onPress={() => Linking.openURL(item.url)}>
+          <Text style={styles.button} color='white' fontWeight='bold'>Open in GitHub</Text>
+        </Pressable>
+      }
     </View>
   );
 };

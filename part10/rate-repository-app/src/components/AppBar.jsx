@@ -42,17 +42,36 @@ const AppBar = () => {
         </Pressable>
         {!result.loading && !result.data.me
           ?
-            <Pressable onPress={() => navigate('/signin')}>
-              <Text style={styles.padding} color='white' fontWeight='bold' fontSize='subheading'>
-                Sign in
-              </Text>
-            </Pressable>
+            <>
+              <Pressable onPress={() => navigate('/signin')}>
+                <Text style={styles.padding} color='white' fontWeight='bold' fontSize='subheading'>
+                  Sign in
+                </Text>
+              </Pressable>
+              <Pressable onPress={() => navigate('/signup')}>
+                <Text style={styles.padding} color='white' fontWeight='bold' fontSize='subheading'>
+                  Sign up
+                </Text>
+              </Pressable>
+            </>
           :
-            <Pressable onPress={signOut}>
-              <Text style={styles.padding} color='white' fontWeight='bold' fontSize='subheading'>
-                Sign out
-              </Text>
-            </Pressable>
+            <>
+              <Pressable onPress={() => navigate('/createReview')}>
+                <Text style={styles.padding} color='white' fontWeight='bold' fontSize='subheading'>
+                  Create a review
+                </Text>
+              </Pressable>
+              <Pressable onPress={() => navigate('/myReviews')}>
+                <Text style={styles.padding} color='white' fontWeight='bold' fontSize='subheading'>
+                  My reviews
+                </Text>
+              </Pressable>
+              <Pressable onPress={signOut}>
+                <Text style={styles.padding} color='white' fontWeight='bold' fontSize='subheading'>
+                  Sign out
+                </Text>
+              </Pressable>
+            </>
         }
       </ScrollView>
     </View>
