@@ -14,23 +14,23 @@
 - Containerization with Docker
 - and so much more...
 # Statistics
-| Part                                                                                                                              | Exercises   | Hours      |
-| --------------------------------------------------------------------------------------------------------------------------------- | ----------- |------------|
-| [0 - Fundamentals of Web apps](https://github.com/qknguyen83/Full-stack-open/tree/main/part0)                                     | 6/6         | 6          |
-| [1 - Introduction to React](https://github.com/qknguyen83/Full-stack-open/tree/main/part1)                                        | 14/14       | 12         |
-| [2 - Communicating with server](https://github.com/qknguyen83/Full-stack-open/tree/main/part2)                                    | 20/20       | 12         |
-| [3 - Programming a server with NodeJS and Express](https://github.com/qknguyen83/Full-stack-open/tree/main/part3)                 | 22/22       | 15         |
-| [4 - Testing Express servers, user administration](https://github.com/qknguyen83/Full-stack-open/tree/main/part4)                 | 23/23       | 20         |
-| [5 - Testing React apps](https://github.com/qknguyen83/Full-stack-open/tree/main/part5)                                           | 22/22       | 15         |
-| [6 - State management with Redux](https://github.com/qknguyen83/Full-stack-open/tree/main/part6)                                  | 21/21       | 15         |
-| [7 - React router, custom hooks, styling app with CSS and webpack](https://github.com/qknguyen83/Full-stack-open/tree/main/part7) | 21/21       | 20         |
-| [8 - GraphQL](https://github.com/qknguyen83/Full-stack-open/tree/main/part8)                                                      | 26/26       | 20         |
-| [9 - TypeScript](https://github.com/qknguyen83/Full-stack-open/tree/main/part9)                                                   | 27/27       | 30         |
-| [10 - React Native](https://github.com/qknguyen83/Full-stack-open/tree/main/part10)                                               | 27/27       | 32         |
-| [11 - CI/CD](https://github.com/qknguyen83/full-stack-open-pokedex)                                                               | 21/21       | 25         |
-| [12 - Containers](https://github.com/qknguyen83/part12-containers-applications)                                                   | 22/22       | 25         |
-| [13 - Using relational databases](https://github.com/qknguyen83/part13-relational-databases)                                      | 24/24       | 20         |
-| **Total**                                                                                                                         | **296/296** | 267        |
+| Part                                                                                                                               | Exercises   | Hours      |
+| ---------------------------------------------------------------------------------------------------------------------------------  | ----------- |------------|
+| [0 - Fundamentals of Web apps](https://github.com/qknguyen83/Full-stack-open/tree/main/part0)                                      | 6/6         | 6          |
+| [1 - Introduction to React](https://github.com/qknguyen83/Full-stack-open/tree/main/part1)                                         | 14/14       | 12         |
+| [2 - Communicating with server](https://github.com/qknguyen83/Full-stack-open/tree/main/part2)                                     | 20/20       | 12         |
+| [3 - Programming a server with NodeJS and Express](https://github.com/qknguyen83/Full-stack-open/tree/main/part3)                  | 22/22       | 15         |
+| [4 - Testing Express servers, user administration](https://github.com/qknguyen83/Full-stack-open/tree/main/part4)                  | 23/23       | 20         |
+| [5 - Testing React apps](https://github.com/qknguyen83/Full-stack-open/tree/main/part5)                                            | 22/22       | 15         |
+| [6 - State management with Redux](https://github.com/qknguyen83/Full-stack-open/tree/main/part6)                                   | 21/21       | 15         |
+| [7 - React router, custom hooks, styling app with CSS, and webpack](https://github.com/qknguyen83/Full-stack-open/tree/main/part7) | 21/21       | 20         |
+| [8 - GraphQL](https://github.com/qknguyen83/Full-stack-open/tree/main/part8)                                                       | 26/26       | 20         |
+| [9 - TypeScript](https://github.com/qknguyen83/Full-stack-open/tree/main/part9)                                                    | 27/27       | 30         |
+| [10 - React Native](https://github.com/qknguyen83/Full-stack-open/tree/main/part10)                                                | 27/27       | 32         |
+| [11 - CI/CD](https://github.com/qknguyen83/full-stack-open-pokedex)                                                                | 21/21       | 25         |
+| [12 - Containers](https://github.com/qknguyen83/part12-containers-applications)                                                    | 22/22       | 25         |
+| [13 - Using relational databases](https://github.com/qknguyen83/part13-relational-databases)                                       | 24/24       | 20         |
+| **Total**                                                                                                                          | **296/296** | 267        |
 # Certificates
 | Part  | Link                                                                                                          |
 | ------| ------------------------------------------------------------------------------------------------------------- |
